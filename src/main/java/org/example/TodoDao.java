@@ -56,7 +56,6 @@ public class TodoDao {
        Query query = session.createQuery("from Todo");
        List<Todo> todos = query.list();
        session.getTransaction().commit();
-       session.flush();
        session.close();
        return todos;
    }
@@ -67,7 +66,6 @@ public class TodoDao {
 
        Todo todo = (Todo) session.get(Todo.class, id);
        session.getTransaction().commit();
-       session.flush();
        session.close();
        return todo;
    }
