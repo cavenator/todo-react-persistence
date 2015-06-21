@@ -22,7 +22,7 @@ public class TodoTest extends TestCase {
 
         assertEquals(fetchedTodo.getTitle(), todo.getTitle());
 
-        dao.delete(fetchedTodo);
+        dao.delete(fetchedTodo.getId());
 
         List<Todo> todos = dao.get();
 

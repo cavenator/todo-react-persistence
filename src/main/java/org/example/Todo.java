@@ -4,12 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
+@SequenceGenerator(name="todo_seq",sequenceName="todo_seq")
 public class Todo {
    
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="todo_seq")
    private Integer id;
    private String title;
    private String description;
@@ -39,6 +41,10 @@ public class Todo {
 
    public String getTitle(){
        return this.title;
+   }
+
+   public TodoDto toDto(){
+        return new TodoDto(this.id, this.title, this.description);
    }
 
    @Override

@@ -16,13 +16,12 @@ import java.util.Map;
 public class Main {
 
    public static void main(String[] args) throws Exception {
-       Map<Integer, TodoDto> inMemoryMap = new HashMap<Integer, TodoDto>();
-
+       TodoDao todoDao = new TodoDao();
        final String RESOURCES_PATH = "/";
 
        ClasspathResourceObject rootResource = new ClasspathResourceObject(RESOURCES_PATH,"/index.html", Main.class);
-       TodosResource todosResource = new TodosResource("/todo", inMemoryMap);
-       TodoResource todoResource = new TodoResource("/todo/{id}", inMemoryMap);
+       TodosResource todosResource = new TodosResource("/todo", todoDao);
+       TodoResource todoResource = new TodoResource("/todo/{id}", todoDao);
        ClasspathResourcesObject staticResources = new ClasspathResourcesObject("/{resource*}", Main.class, RESOURCES_PATH);
 
        HttpObjectsJettyHandler.launchServer(8080, rootResource, todosResource, todoResource, staticResources);

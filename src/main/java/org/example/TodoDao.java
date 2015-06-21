@@ -21,6 +21,7 @@ public class TodoDao {
 
        Serializable id = session.save(todo);
        t.commit();
+       session.flush();
        session.close();
        return (Integer) id;
    }
@@ -32,15 +33,19 @@ public class TodoDao {
        Query query = session.createQuery("delete Todo");
        query.executeUpdate();
        session.getTransaction().commit();
+       session.flush();
        session.close();
    }
    
-   public void delete(Todo todo){
+   public void delete(Integer id){
        Session session = sessionFactory.openSession();
        session.beginTransaction();
 
-       session.delete(todo);
+       Query query = session.createQuery("delete Todo where id = ?");
+       query.setParameter(0, id);
+       query.executeUpdate();
        session.getTransaction().commit();
+       session.flush();
        session.close();
    }
 
@@ -51,6 +56,7 @@ public class TodoDao {
        Query query = session.createQuery("from Todo");
        List<Todo> todos = query.list();
        session.getTransaction().commit();
+       session.flush();
        session.close();
        return todos;
    }
@@ -61,6 +67,7 @@ public class TodoDao {
 
        Todo todo = (Todo) session.get(Todo.class, id);
        session.getTransaction().commit();
+       session.flush();
        session.close();
        return todo;
    }

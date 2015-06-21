@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TodoResource extends HttpObject {
-    private Map<Integer, TodoDto> inMemoryMap;
+    private TodoDao todoDao;
 
-    public TodoResource(String pathPattern, Map<Integer, TodoDto> map){
+    public TodoResource(String pathPattern, TodoDao todoDao){
         super(pathPattern);
-        this.inMemoryMap = map;
+        this.todoDao = todoDao;
     }
 
     @Override
@@ -25,11 +25,8 @@ public class TodoResource extends HttpObject {
             return BAD_REQUEST(Json(JsonUtil.toJson(new ErrorDto("invalid id: "+id))));
         }
 
-        TodoDto todo = inMemoryMap.remove(numId);
-        if (todo != null)
-            return NO_CONTENT();
-
-        return BAD_REQUEST(Json(JsonUtil.toJson(new ErrorDto("todo that did not exist prior t DELETE"))));
+        todoDao.delete(numId);
+        return NO_CONTENT();
     }
 
     @Override
@@ -42,9 +39,9 @@ public class TodoResource extends HttpObject {
             return BAD_REQUEST(Json(JsonUtil.toJson(new ErrorDto("invalid id: "+id))));
         }
 
-        TodoDto todo = inMemoryMap.get(numId);
+        Todo todo = todoDao.get(numId);
         if (todo != null)
-            return OK(Json(JsonUtil.toJson(todo)));
+            return OK(Json(JsonUtil.toJson(todo.toDto())));
 
         return BAD_REQUEST(Json(JsonUtil.toJson(new ErrorDto("todo does not exist with id: "+id))));
     }
