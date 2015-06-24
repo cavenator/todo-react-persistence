@@ -7,11 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name="todo_seq",sequenceName="todo_seq")
 public class Todo {
    
+   @SequenceGenerator(name="todo_seq",sequenceName="todo_seq")
    @Id
-   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="todo_seq")
+   @GeneratedValue(generator="todo_seq")
    private Integer id;
    private String title;
    private String description;
