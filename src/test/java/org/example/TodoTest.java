@@ -24,8 +24,8 @@ public class TodoTest extends TestCase {
 
         dao.delete(fetchedTodo.getId());
 
-        List<Todo> todos = dao.get();
+        Todo nullTodo = dao.get(id);
 
-        assertEquals(todos.size(), 0);
+        assertNull(nullTodo);
     }
 }
