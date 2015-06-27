@@ -12,7 +12,9 @@ public class TodoDao {
    private SessionFactory sessionFactory;
 
    public TodoDao(){
-       sessionFactory = new Configuration().configure().buildSessionFactory();
+       Configuration configuration = new Configuration().configure();
+       configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://"+System.getenv("DB_PORT_5432_TCP_ADDR")+":"+System.getenv("DB_PORT_5432_TCP_PORT")+"/postgres");
+       sessionFactory = configuration.buildSessionFactory();
    }
 
    public Integer save(Todo todo){

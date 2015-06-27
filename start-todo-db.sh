@@ -1,12 +1,10 @@
 #!/bin/bash
 
 count=$(sudo docker ps -a | grep todo-db | wc -l)
-echo $count
 if [ $count -eq 1 ] 
    then
         echo "Starting todo-db for app"
         sudo docker start todo-db
-        echo "Note to self .... create data volume for this container and learn how to back it up in case of container failure"
    else
        echo "okay .... Lets make a new one!"
        /bin/bash ./create-db-container.sh
