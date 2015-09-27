@@ -9,10 +9,14 @@ import java.io.Serializable;
 import org.hibernate.Query;
 
 public class TodoDao {
-   private SessionFactory sessionFactory;
+   protected SessionFactory sessionFactory;
 
    public TodoDao(){
        sessionFactory = new Configuration().configure().buildSessionFactory();
+   }
+
+   public TodoDao(Configuration configuration){
+       sessionFactory = configuration.buildSessionFactory();
    }
 
    public Integer save(Todo todo){
