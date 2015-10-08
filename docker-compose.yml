@@ -1,0 +1,7 @@
+web:
+    image: acave/todo-react-persistence:hibernate
+    ports:
+     - "127.0.0.1:8080:8080"
+    external_links: 
+     - todo_db:db   
+    container_name: todo-app 
