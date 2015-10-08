@@ -2,6 +2,11 @@ web:
     image: acave/todo-react-persistence:hibernate
     ports:
      - "127.0.0.1:8080:8080"
-    external_links: 
-     - todo_db:db   
+    links: 
+     - db:db   
     container_name: todo-app 
+db:
+    image: postgres:9.1.18
+    ports:
+     - "127.0.0.1:5432:5432"
+    container_name: todo-db   
