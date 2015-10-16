@@ -23,8 +23,8 @@ RUN /bin/bash -c -l "ln -s /usr/local/apache-maven-3.2.5/bin/mvn /usr/bin/mvn"
 
 #pull project from GIT
 RUN mkdir -p /app/todo-react-persistence
-#ADD . /app/todo-react-persistence
-RUN /bin/bash -l -c "git clone https://github.com/cavenator/todo-react-persistence.git /app/todo-react-persistence"
+
+ADD . /app/todo-react-persistence
 
 WORKDIR /app/todo-react-persistence
 
