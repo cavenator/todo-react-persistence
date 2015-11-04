@@ -1,76 +1,39 @@
 package org.example;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.dao.BasicDAO;
+import org.mongodb.morphia.query.Query;
+
 import java.util.List;
-import java.io.Serializable;
-import org.hibernate.Query;
 
-public class TodoDao {
-   protected SessionFactory sessionFactory;
-
+public class TodoDao extends BasicDAO<Todo, ObjectId>{
    public TodoDao(){
-       sessionFactory = new Configuration().configure().buildSessionFactory();
+      super(new MongoClient("localhost", 27017), new Morphia().mapPackage("org.example"), "TodoDB");
    }
 
-   public TodoDao(Configuration configuration){
-       sessionFactory = configuration.buildSessionFactory();
+   public TodoDao(Morphia morphia, MongoClient mongo, String DbName ){
+      super(mongo, morphia, DbName);
    }
 
-   public Integer save(Todo todo){
-       Session session = sessionFactory.openSession();
-       Transaction t = session.beginTransaction();
-
-       Serializable id = session.save(todo);
-       t.commit();
-       session.flush();
-       session.close();
-       return (Integer) id;
+   public void delete(ObjectId id){
+      Query<Todo> deleteQuery = getDatastore().createQuery(Todo.class).field("id").equal(id);
+      deleteByQuery(deleteQuery);
    }
 
    public void deleteAll(){
-       Session session = sessionFactory.openSession();
-       session.beginTransaction();
-
-       Query query = session.createQuery("delete Todo");
-       query.executeUpdate();
-       session.getTransaction().commit();
-       session.flush();
-       session.close();
-   }
-   
-   public void delete(Integer id){
-       Session session = sessionFactory.openSession();
-       session.beginTransaction();
-
-       Query query = session.createQuery("delete Todo where id = ?");
-       query.setParameter(0, id);
-       query.executeUpdate();
-       session.getTransaction().commit();
-       session.flush();
-       session.close();
+      Query<Todo> deleteAllQuery = getDatastore().createQuery(Todo.class);
+      deleteByQuery(deleteAllQuery);
    }
 
    public List<Todo> get(){
-       Session session = sessionFactory.openSession();
-       session.beginTransaction();
-
-       Query query = session.createQuery("from Todo");
-       List<Todo> todos = query.list();
-       session.getTransaction().commit();
-       session.close();
-       return todos;
+      return getDatastore().find(Todo.class).asList();
    }
 
-   public Todo get(Integer id){
-       Session session = sessionFactory.openSession();
-       session.beginTransaction();
-
-       Todo todo = (Todo) session.get(Todo.class, id);
-       session.getTransaction().commit();
-       session.close();
-       return todo;
+   public Todo get(ObjectId id){
+      return getDatastore().get(Todo.class, id);
    }
 }

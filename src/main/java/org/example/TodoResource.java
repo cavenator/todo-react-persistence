@@ -1,5 +1,6 @@
 package org.example;
 
+import org.bson.types.ObjectId;
 import org.httpobjects.HttpObject;
 import org.httpobjects.Request;
 import org.httpobjects.Response;
@@ -18,28 +19,28 @@ public class TodoResource extends HttpObject {
     @Override
     public Response delete(Request req) {
         String id = req.path().valueFor("id");
-        Integer numId;
+        ObjectId objectId;
         try {
-            numId = Integer.parseInt(id);
+            objectId = new ObjectId(id);
         } catch (Exception e){
             return BAD_REQUEST(Json(JsonUtil.toJson(new ErrorDto("invalid id: "+id))));
         }
 
-        todoDao.delete(numId);
+        todoDao.delete(objectId);
         return NO_CONTENT();
     }
 
     @Override
     public Response get(Request req) {
         String id = req.path().valueFor("id");
-        Integer numId;
+        ObjectId objectId;
         try {
-            numId = Integer.parseInt(id);
+            objectId = new ObjectId(id);
         } catch (Exception e){
             return BAD_REQUEST(Json(JsonUtil.toJson(new ErrorDto("invalid id: "+id))));
         }
 
-        Todo todo = todoDao.get(numId);
+        Todo todo = todoDao.get(objectId);
         if (todo != null)
             return OK(Json(JsonUtil.toJson(todo.toDto())));
 

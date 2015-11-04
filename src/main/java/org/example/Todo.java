@@ -1,18 +1,14 @@
 package org.example;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 @Entity
 public class Todo {
    
-   @SequenceGenerator(name="todo_seq",sequenceName="todo_seq")
    @Id
-   @GeneratedValue(generator="todo_seq")
-   private Integer id;
+   private ObjectId id;
    private String title;
    private String description;
 
@@ -23,8 +19,8 @@ public class Todo {
       this.description = description;
    }
 
-   public Integer getId(){
-       return id;
+   public ObjectId getId(){
+       return this.id;
    }
 
    public void setDescription(String description){

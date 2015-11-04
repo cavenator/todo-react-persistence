@@ -1,7 +1,9 @@
 package org.example;
 
+import org.bson.types.ObjectId;
+
 public class TodoDto {
-   public Integer id;
+   public ObjectId id;
    public String title;
    public String description;
 
@@ -12,7 +14,7 @@ public class TodoDto {
       this.description = description;
    }
 
-   public TodoDto(Integer id, String title, String description){
+   public TodoDto(ObjectId id, String title, String description){
       this.id = id; 
       this.title = title;
       this.description = description;

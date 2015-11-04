@@ -1,15 +1,13 @@
 package org.example;
 
+import org.bson.types.ObjectId;
 import org.httpobjects.HttpObject;
 import org.httpobjects.Request;
 import org.httpobjects.Response;
+import org.mongodb.morphia.Key;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,14 +33,14 @@ public class TodosResource extends HttpObject {
 
         TodoDto dto = JsonUtil.fromJson(out, TodoDto.class);
         Todo todo = new Todo(dto.title, dto.description);
-        Integer id = (Integer) todoDao.save(todo);
-        Todo fetchedTodo = todoDao.get(id);
+        Key<Todo> key = todoDao.save(todo);
+        Todo fetchedTodo = todoDao.get((ObjectId) key.getId());
         return OK(Json(JsonUtil.toJson(fetchedTodo.toDto())));
     }
 
     @Override
     public Response delete(Request req) {
         todoDao.deleteAll();
-        return OK(null);
+        return NO_CONTENT();
     }
 }

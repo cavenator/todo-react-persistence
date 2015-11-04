@@ -58,22 +58,29 @@
          <artifactId>jackson-mapper-asl</artifactId>
          <version>1.8.3</version>
       </dependency>
-      <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-entitymanager</artifactId>
-          <version>4.2.15.Final</version>
-      </dependency>
-      <dependency>
-          <groupId>org.postgresql</groupId>
-          <artifactId>postgresql</artifactId>
-          <version>9.3-1102-jdbc41</version>
-      </dependency>
        <dependency>
-           <groupId>org.hsqldb</groupId>
-           <artifactId>hsqldb</artifactId>
-           <version>2.3.0</version>
-           <scope>test</scope>
+           <groupId>org.mongodb.morphia</groupId>
+           <artifactId>morphia</artifactId>
+           <!-- See https://github.com/mongodb/morphia/releases for the latest version -->
+           <version>1.0.1</version>
        </dependency>
+
+       <!-- Optional Jars (for certain features) but required by maven for building. -->
+       <dependency>
+           <groupId>cglib</groupId>
+           <artifactId>cglib-nodep</artifactId>
+           <version>[2.1_3,)</version>
+           <type>jar</type>
+           <optional>true</optional>
+       </dependency>
+       <dependency>
+           <groupId>com.thoughtworks.proxytoys</groupId>
+           <artifactId>proxytoys</artifactId>
+           <version>1.0</version>
+           <type>jar</type>
+           <optional>true</optional>
+       </dependency>
+       <!-- End of Optional Jars (for certain features) but required by maven for building. -->
        <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
