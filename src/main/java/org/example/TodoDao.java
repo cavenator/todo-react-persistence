@@ -1,10 +1,7 @@
 package org.example;
 
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
 import org.mongodb.morphia.query.Query;

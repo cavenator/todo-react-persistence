@@ -1,5 +1,6 @@
 package org.example;
 
+import com.mongodb.MongoClient;
 import org.httpobjects.HttpObject;
 import org.httpobjects.Request;
 import org.httpobjects.Response;
@@ -17,11 +18,13 @@ public class Main {
 
    public static void main(String[] args) throws Exception {
        TodoDao todoDao;
-//       if (args.length > 0 && Boolean.valueOf(args[0])){
- //         todoDao = new TodoDao(getDockerDBConfiguration());
-//       } else {
+       if (args.length > 0 && Boolean.valueOf(args[0])){
+           String dbAddress = System.getenv("DB_PORT_27017_TCP_ADDR");
+           String dbPort = System.getenv("DB_PORT_27017_TCP_PORT");
+           todoDao = new TodoDao(new MongoClient(dbAddress, Integer.valueOf(dbPort)));
+       } else {
            todoDao = new TodoDao();
-//       }
+       }
 
        final String RESOURCES_PATH = "/";
 

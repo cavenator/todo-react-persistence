@@ -36,5 +36,3 @@ EXPOSE 8080
 
 ENTRYPOINT ["java","-jar","target/todo-app-persistence-0.1-SNAPSHOT.one-jar.jar","true"]
 
-#NOTE: If you are going to run the app from a docker container, you must edit the hibernate config so you could link up the DB from within the container
-

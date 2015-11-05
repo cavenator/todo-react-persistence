@@ -4,9 +4,9 @@ web:
      - "127.0.0.1:8080:8080"
     links: 
      - db:db   
-    container_name: todo-app 
+    container_name: todo-app-mongo 
 db:
-    image: postgres:9.1.18
+    image: dockerfile/mongodb
     ports:
-     - "127.0.0.1:5432:5432"
-    container_name: todo-db   
+     - "127.0.0.1:27017:27017"
+    container_name: todo-mongo
