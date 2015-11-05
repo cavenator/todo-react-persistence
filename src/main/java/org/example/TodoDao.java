@@ -2,6 +2,7 @@ package org.example;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -11,8 +12,13 @@ import org.mongodb.morphia.query.Query;
 import java.util.List;
 
 public class TodoDao extends BasicDAO<Todo, ObjectId>{
+   private final static String TODO_DB = "TodoDB";
    public TodoDao(){
-      super(new MongoClient("localhost", 27017), new Morphia().mapPackage("org.example"), "TodoDB");
+      super(new MongoClient("localhost", 27017), new Morphia().mapPackage("org.example"), TODO_DB);
+   }
+
+   public TodoDao(MongoClient client){
+      super(client, new Morphia().map(Todo.class), TODO_DB);
    }
 
    public TodoDao(Morphia morphia, MongoClient mongo, String DbName ){

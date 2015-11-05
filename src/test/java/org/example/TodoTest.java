@@ -24,7 +24,6 @@ public class TodoTest extends TestCase {
     TodoDao dao;
     final MongoClient mongoClient = new MongoClient("localhost",27017);
     final Morphia morphia = new Morphia().mapPackage("org.example");
-    Datastore dataSource;
 
     @Override
     public void setUp(){

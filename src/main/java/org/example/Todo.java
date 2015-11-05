@@ -40,7 +40,7 @@ public class Todo {
    }
 
    public TodoDto toDto(){
-        return new TodoDto(this.id, this.title, this.description);
+        return new TodoDto(this.id.toString(), this.title, this.description);
    }
 
    @Override
